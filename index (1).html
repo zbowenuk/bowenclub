@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bowen — bowenclub</title>
+  <meta name="description" content="Bowen 的个人主页 - 独立开发者、研究者、创作者" />
+  <style>
+    /* ============ 主题变量 ============ */
+    :root[data-theme="dark"] {
+      --bg-primary: #000000;
+      --bg-secondary: #0a0a0a;
+      --bg-card-start: #1c1c1e;
+      --bg-card-end: #0a0a0a;
+      --bg-card-flat: #1c1c1e;
+      --text-primary: #f5f5f7;
+      --text-secondary: #a1a1a6;
+      --text-tertiary: #6e6e73;
+      --accent: #2997ff;
+      --accent-hover: #0071e3;
+      --accent-text-on: #ffffff;
+      --border: rgba(255, 255, 255, 0.1);
+      --border-hover: rgba(255, 255, 255, 0.25);
+      --nav-bg: rgba(0, 0, 0, 0.8);
+      --hero-gradient-end: #1a1a1a;
+      --gradient-text-end: #a0a0a8;
+      --project-hero-start: #0e1a2b;
+      --project-hero-end: #1a2942;
+      --project-hero-glow: rgba(0, 200, 255, 0.2);
+      --hero-glow: rgba(100, 130, 255, 0.15);
+      --input-bg: #1c1c1e;
+      --input-border: rgba(255, 255, 255, 0.15);
+    }
+
+    :root[data-theme="light"] {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f7;
+      --bg-card-start: #ffffff;
+      --bg-card-end: #f5f5f7;
+      --bg-card-flat: #ffffff;
+      --text-primary: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --text-tertiary: #86868b;
+      --accent: #0071e3;
+      --accent-hover: #0077ed;
+      --accent-text-on: #ffffff;
+      --border: rgba(0, 0, 0, 0.1);
+      --border-hover: rgba(0, 0, 0, 0.2);
+      --nav-bg: rgba(255, 255, 255, 0.8);
+      --hero-gradient-end: #f5f5f7;
+      --gradient-text-end: #6e6e73;
+      --project-hero-start: #e8f1fb;
+      --project-hero-end: #d4e6f7;
+      --project-hero-glow: rgba(0, 113, 227, 0.15);
+      --hero-glow: rgba(100, 130, 255, 0.1);
+      --input-bg: #ffffff;
+      --input-border: rgba(0, 0, 0, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    /* ============ 导航栏 ============ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 48px;
+      background: var(--nav-bg);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 0.5px solid var(--border);
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+
+    nav .nav-container {
+      max-width: 1024px;
+      width: 100%;
+      padding: 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .logo {
+      font-size: 21px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    nav .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    nav .nav-links a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 12px;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+
+    nav .nav-links a:hover {
+      opacity: 1;
+    }
+
+    .theme-toggle {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-primary);
+      opacity: 0.8;
+      transition: opacity 0.3s, transform 0.3s;
+      padding: 0;
+    }
+
+    .theme-toggle:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .theme-toggle .icon-sun {
+      display: none;
+    }
+
+    [data-theme="light"] .theme-toggle .icon-sun {
+      display: block;
+    }
+
+    [data-theme="light"] .theme-toggle .icon-moon {
+      display: none;
+    }
+
+    /* ============ Hero ============ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 22px 40px;
+      background: linear-gradient(180deg, var(--bg-primary) 0%, var(--hero-gradient-end) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, var(--hero-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: 96px;
+      font-weight: 700;
+      letter-spacing: -3px;
+      line-height: 1;
+      margin-bottom: 20px;
+      background: linear-gradient(180deg, var(--text-primary) 0%, var(--gradient-text-end) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero .subtitle {
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      letter-spacing: -0.5px;
+      max-width: 700px;
+      line-height: 1.3;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 32px;
+    }
+
+    .hero .cta-group {
+      display: flex;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      font-size: 17px;
+      border-radius: 980px;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--accent-text-on);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: scale(1.02);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    .btn-secondary:hover {
+      background: var(--accent);
+      color: var(--accent-text-on);
+    }
+
+    /* ============ Section ============ */
+    section {
+      padding: 120px 22px;
+      max-width: 1024px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      font-size: 14px;
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 64px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      background: linear-gradient(180deg, var(--text-primary) 0%, var(--gradient-text-end) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-subtitle {
+      font-size: 21px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      max-width: 700px;
+      margin-bottom: 60px;
+    }
+
+    .category-title {
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin: 60px 0 24px;
+      color: var(--text-primary);
+    }
+
+    .category-title:first-of-type {
+      margin-top: 0;
+    }
+
+    /* ============ 关于 ============ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .about-card {
+      background: linear-gradient(180deg, var(--bg-card-start) 0%, var(--bg-card-end) 100%);
+      border-radius: 28px;
+      padding: 48px;
+      border: 0.5px solid var(--border);
+      transition: transform 0.4s ease, border-color 0.4s ease;
+    }
+
+    .about-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+    }
+
+    .about-card .icon {
+      font-size: 48px;
+      margin-bottom: 24px;
+    }
+
+    .about-card h3 {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .about-card p {
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    /* ============ 学历 ============ */
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .timeline-item {
+      position: relative;
+      background: linear-gradient(180deg, var(--bg-card-start) 0%, var(--bg-card-end) 100%);
+      border-radius: 28px;
+      padding: 48px;
+      border: 0.5px solid var(--border);
+      transition: transform 0.4s ease, border-color 0.4s ease;
+    }
+
+    .timeline-item:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+    }
+
+    .timeline-item .year {
+      font-size: 14px;
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .timeline-item h3 {
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .timeline-item .degree {
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 4px;
+    }
+
+    .timeline-item .location {
+      font-size: 15px;
+      color: var(--text-tertiary);
+      margin-top: 8px;
+    }
+
+    /* ============ 项目 ============ */
+    .project-hero {
+      background: linear-gradient(180deg, var(--project-hero-start) 0%, var(--project-hero-end) 100%);
+      border-radius: 28px;
+      padding: 80px 60px;
+      text-align: center;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .project-hero::before {
+      content: "";
+      position: absolute;
+      bottom: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 1000px;
+      background: radial-gradient(circle, var(--project-hero-glow) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .project-hero .project-tag {
+      color: var(--accent);
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-hero h3 {
+      font-size: 64px;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+      color: var(--text-primary);
+    }
+
+    .project-hero p {
+      font-size: 21px;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto 32px;
+      line-height: 1.5;
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-hero .fish-emoji {
+      font-size: 80px;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 0 30px var(--project-hero-glow));
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--bg-card-flat);
+      border-radius: 28px;
+      padding: 40px;
+      border: 0.5px solid var(--border);
+      transition: transform 0.4s, border-color 0.4s;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+    }
+
+    .project-card .project-tag {
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .project-card h3 {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .project-card p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .project-card .project-link {
+      color: var(--accent);
+      font-size: 16px;
+      margin-top: 24px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .project-card .project-link:hover {
+      text-decoration: underline;
+    }
+
+    .placeholder-card {
+      background: var(--bg-card-flat);
+      border-radius: 28px;
+      padding: 40px;
+      border: 0.5px dashed var(--border-hover);
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--text-tertiary);
+      font-size: 16px;
+    }
+
+    /* ============ 联系 ============ */
+    .contact-section {
+      text-align: center;
+      padding: 160px 22px;
+    }
+
+    .contact-section h2 {
+      font-size: 80px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      margin-bottom: 32px;
+      background: linear-gradient(180deg, var(--text-primary) 0%, var(--gradient-text-end) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .contact-section > p {
+      font-size: 24px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 48px;
+      line-height: 1.4;
+    }
+
+    .contact-form {
+      max-width: 560px;
+      margin: 0 auto 48px;
+      text-align: left;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 18px;
+      background: var(--input-bg);
+      border: 0.5px solid var(--input-border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-size: 16px;
+      font-family: inherit;
+      transition: border-color 0.3s;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-submit-area {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .form-status {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .form-status.success {
+      color: #30d158;
+    }
+
+    .form-status.error {
+      color: #ff3b30;
+    }
+
+    .contact-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      max-width: 560px;
+      margin: 48px auto;
+      color: var(--text-tertiary);
+      font-size: 13px;
+    }
+
+    .contact-divider::before,
+    .contact-divider::after {
+      content: "";
+      flex: 1;
+      height: 0.5px;
+      background: var(--border);
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      padding: 12px 28px;
+      background: var(--bg-card-flat);
+      border: 0.5px solid var(--input-border);
+      border-radius: 980px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 15px;
+      transition: all 0.3s;
+    }
+
+    .contact-link:hover {
+      transform: scale(1.02);
+      border-color: var(--border-hover);
+    }
+
+    /* ============ 页脚 ============ */
+    footer {
+      padding: 40px 22px;
+      text-align: center;
+      border-top: 0.5px solid var(--border);
+      color: var(--text-tertiary);
+      font-size: 12px;
+    }
+
+    /* ============ 滚动动画 ============ */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============ 响应式 ============ */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 56px; letter-spacing: -1.5px; }
+      .hero .subtitle { font-size: 20px; }
+      .section-title { font-size: 40px; }
+      .contact-section h2 { font-size: 48px; }
+      .about-grid, .project-grid { grid-template-columns: 1fr; }
+      .project-hero h3 { font-size: 40px; }
+      .project-hero { padding: 48px 24px; }
+      nav .nav-links { gap: 16px; }
+      nav .nav-links a { font-size: 11px; }
+      section { padding: 80px 22px; }
+      .category-title { font-size: 24px; }
+      .timeline-item, .about-card { padding: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 导航栏 -->
+  <nav>
+    <div class="nav-container">
+      <a href="#" class="logo">bowenclub</a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="#about">关于</a></li>
+          <li><a href="#education">经历</a></li>
+          <li><a href="#projects">作品</a></li>
+          <li><a href="#contact">联系</a></li>
+        </ul>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="切换主题">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <h1>Bowen</h1>
+    <p class="subtitle">独立开发者 · 研究者 · 创作者<br>用代码、实验和好奇心构建有趣的东西。</p>
+    <div class="cta-group">
+      <a href="#projects" class="btn btn-primary">看看作品</a>
+      <a href="#about" class="btn btn-secondary">了解更多</a>
+    </div>
+  </header>
+
+  <!-- 关于我 -->
+  <section id="about">
+    <p class="section-tag fade-in">关于</p>
+    <h2 class="section-title fade-in">不止一个标签。</h2>
+    <p class="section-subtitle fade-in">白天在实验室和硬件打交道,夜晚写代码做游戏。我喜欢把抽象的想法变成可以运行的东西。</p>
+
+    <div class="about-grid">
+      <div class="about-card fade-in">
+        <div class="icon">🔬</div>
+        <h3>研究者</h3>
+        <p>实验室里的硬件工程师。研究气动系统、模拟移动床、脑机接口、流化床实验。喜欢把复杂的问题拆解成可以测量的步骤。</p>
+      </div>
+      <div class="about-card fade-in">
+        <div class="icon">💻</div>
+        <h3>开发者</h3>
+        <p>用 Godot、Python、Web 技术构建游戏和工具。相信好的代码应该像好的硬件一样——简洁、可靠、有美感。</p>
+      </div>
+      <div class="about-card fade-in">
+        <div class="icon">🎮</div>
+        <h3>独立游戏</h3>
+        <p>正在用 Godot 4 开发一款 2D 钓鱼游戏。从核心循环到美术资源,一个人完成。这是我对独立创作的实验。</p>
+      </div>
+      <div class="about-card fade-in">
+        <div class="icon">📈</div>
+        <h3>探索者</h3>
+        <p>对投资、AI、创业保持长期好奇。相信复利的力量,也相信跨领域的连接会带来意想不到的洞察。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 学历经历 -->
+  <section id="education">
+    <p class="section-tag fade-in">经历</p>
+    <h2 class="section-title fade-in">从中国到英国。</h2>
+    <p class="section-subtitle fade-in">五年时间,横跨两国三所大学。从车辆工程到机械设计,把好奇心带到每一个新地方。</p>
+
+    <div class="timeline-grid">
+      <div class="timeline-item fade-in">
+        <p class="year">2024 — 2025</p>
+        <h3>The University of Manchester</h3>
+        <p class="degree">机械工程设计 · 理学硕士 (MSc)</p>
+        <p class="location">英国 · 曼彻斯特</p>
+      </div>
+      <div class="timeline-item fade-in">
+        <p class="year">2022 — 2024</p>
+        <h3>University of Sussex</h3>
+        <p class="degree">车辆工程 · 荣誉工程学士 (BEng with Honours)</p>
+        <p class="location">英国 · 布莱顿</p>
+      </div>
+      <div class="timeline-item fade-in">
+        <p class="year">2020 — 2022</p>
+        <h3>中国石油大学(华东)</h3>
+        <p class="degree">本科课程</p>
+        <p class="location">中国 · 青岛</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 作品 -->
+  <section id="projects">
+    <p class="section-tag fade-in">作品</p>
+    <h2 class="section-title fade-in">正在打造的东西。</h2>
+    <p class="section-subtitle fade-in">每一个项目都是一次学习。从想法到成品,记录我尝试过的东西。</p>
+
+    <!-- 主推 -->
+    <div class="project-hero fade-in">
+      <div class="fish-emoji">🐟</div>
+      <p class="project-tag">主打项目</p>
+      <h3>Fishing Game</h3>
+      <p>一款用 Godot 4 开发的 2D 钓鱼游戏。五个场景、二十五种鱼、卡牌收集系统。即将登陆 Steam。</p>
+      <a href="#" class="btn btn-primary">敬请期待</a>
+    </div>
+
+    <!-- 软件 -->
+    <h3 class="category-title fade-in">软件</h3>
+    <div class="project-grid">
+      <div class="project-card fade-in">
+        <div>
+          <p class="project-tag">Python</p>
+          <h3>Minesweeper</h3>
+          <p>用 tkinter 重新实现的扫雷游戏,带有生命系统、首次点击保护、彩蛋机制。</p>
+        </div>
+        <a href="#" class="project-link">查看项目 →</a>
+      </div>
+      <div class="project-card fade-in">
+        <div>
+          <p class="project-tag">Web</p>
+          <h3>Next.js 实验站</h3>
+          <p>用 Vercel AI 工具搭建的实验性网站,探索 AI 辅助开发的边界。</p>
+        </div>
+        <a href="#" class="project-link">即将公开 →</a>
+      </div>
+    </div>
+
+    <!-- 硬件 -->
+    <h3 class="category-title fade-in">硬件</h3>
+    <div class="project-grid">
+      <div class="project-card fade-in">
+        <div>
+          <p class="project-tag">实验室</p>
+          <h3>气动控制系统</h3>
+          <p>基于 PLC 和电磁阀的循环控制系统,主从活塞架构,可编程时序控制。</p>
+        </div>
+        <a href="#" class="project-link">了解更多 →</a>
+      </div>
+      <div class="project-card fade-in">
+        <div>
+          <p class="project-tag">实验室</p>
+          <h3>SMB 模拟移动床</h3>
+          <p>分离系统设计。注射驱动流、单向阀机构、树脂流化实验,优化分离效率。</p>
+        </div>
+        <a href="#" class="project-link">研究笔记 →</a>
+      </div>
+    </div>
+
+    <!-- 其他 -->
+    <h3 class="category-title fade-in">其他</h3>
+    <div class="project-grid">
+      <div class="placeholder-card fade-in">
+        <p>更多内容,即将到来</p>
+      </div>
+      <div class="placeholder-card fade-in">
+        <p>持续更新中</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系 -->
+  <section id="contact" class="contact-section">
+    <h2 class="fade-in">来聊聊吧。</h2>
+    <p class="fade-in">合作、闲聊、点子交换,都欢迎。留个言或者直接发邮件。</p>
+
+    <form class="contact-form fade-in" id="contactForm">
+      <input type="hidden" name="access_key" value="0eca8709-880f-43ca-b57d-92361580b6da">
+      <input type="hidden" name="subject" value="bowenclub.com 新留言">
+      <input type="hidden" name="from_name" value="bowenclub.com">
+
+      <div class="form-group">
+        <label for="name">称呼</label>
+        <input type="text" id="name" name="name" placeholder="怎么称呼你?" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">邮箱</label>
+        <input type="email" id="email" name="email" placeholder="你的邮箱地址" required>
+      </div>
+
+      <div class="form-group">
+        <label for="message">留言</label>
+        <textarea id="message" name="message" placeholder="想聊点什么?" required></textarea>
+      </div>
+
+      <div class="form-submit-area">
+        <button type="submit" class="btn btn-primary" id="submitBtn">发送留言</button>
+        <span class="form-status" id="formStatus"></span>
+      </div>
+    </form>
+
+    <div class="contact-divider fade-in">
+      <span>或者通过其他方式</span>
+    </div>
+
+    <div class="contact-links fade-in">
+      <a href="mailto:zbowenuk@gmail.com" class="contact-link">邮箱</a>
+      <a href="https://github.com" class="contact-link">GitHub</a>
+      <a href="https://space.bilibili.com" class="contact-link">B站</a>
+      <a href="https://x.com" class="contact-link">X / Twitter</a>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer>
+    <p>© 2026 bowenclub.com · 用 ❤️ 和 ☕ 做的</p>
+  </footer>
+
+  <script>
+    // ============ 主题切换 ============
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', initialTheme);
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) {
+        document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+      }
+    });
+
+    // ============ 滚动淡入 ============
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ============ 平滑滚动 ============
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          window.scrollTo({ top: target.offsetTop - 48, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // ============ 联系表单 ============
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const status = document.getElementById('formStatus');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = '发送中...';
+      status.textContent = '';
+      status.className = 'form-status';
+
+      const formData = new FormData(form);
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          status.textContent = '✓ 已送达,感谢留言';
+          status.className = 'form-status success';
+          form.reset();
+        } else {
+          status.textContent = '发送失败,请稍后再试或直接发邮件';
+          status.className = 'form-status error';
+        }
+      } catch (err) {
+        status.textContent = '网络异常,请稍后再试';
+        status.className = 'form-status error';
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = '发送留言';
+    });
+  </script>
+
+</body>
+</html>
